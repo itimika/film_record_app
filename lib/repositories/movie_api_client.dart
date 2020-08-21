@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../models/movie.dart';
 
 class TMDBClient {
-  static const _apiKey = '69c81d7e545cc1d52278d5b3074cd89b';
-
   static Future<List<dynamic>> fetchMovie(String query) async {
-    final url = 'https://api.themoviedb.org/3/search/movie?api_key=$_apiKey'
+    final url = 'https://api.themoviedb.org/3/search/movie?'
+        'api_key=${DotEnv().env['CLIENT_KEY']}'
         '&language=ja-JA&query=$query';
     final response = await http.get(url);
     if (response.statusCode == 200) {
