@@ -1,29 +1,27 @@
 import 'package:film_sample_app/repositories/movie_api_client.dart';
 import 'package:flutter/material.dart';
+import 'dart:developer';
 
-class Titles extends ChangeNotifier {
+class Titles with ChangeNotifier {
   var _list = <dynamic>[];
-  String _keyword = '';
+  var query = '';
 
   List<String> get list => _list;
   int get listCount => _list.length;
 
-  void keyword(String val) {
-    _keyword = val;
-    notifyListeners();
-  }
-
-  void searchMovies() async {
-    _list.clear();
-    TMDBClient.fetchMovie(_keyword).then((movies) {
-      movies.forEach((movie) => {
-        _list.add(movie.toString())
-      });
+  void searchMovies(String keyword) async {
+    query = keyword;
+    TMDBClient.fetchMovie(keyword).then((movies) {
+      _list = movies;
+      notifyListeners();
     });
-    notifyListeners();
   }
 
   String getTitle(int idx) {
-    return _list[idx];
+    return _list[idx].title;
+  }
+
+  int getId(int idx) {
+    return _list[idx].id;
   }
 }
