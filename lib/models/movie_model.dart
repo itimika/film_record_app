@@ -2,9 +2,13 @@ import 'package:film_sample_app/repositories/movie_api_client.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer';
 
-class Titles with ChangeNotifier {
+import 'movie.dart';
+
+class MovieModel with ChangeNotifier {
   var _list = <dynamic>[];
   var query = '';
+
+  Movie movie;
 
   List<String> get list => _list;
   int get listCount => _list.length;
@@ -23,5 +27,10 @@ class Titles with ChangeNotifier {
 
   int getId(int idx) {
     return _list[idx].id;
+  }
+
+  void saveMovieInfo(int idx) {
+    movie = _list[idx];
+    notifyListeners();
   }
 }

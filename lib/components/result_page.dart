@@ -1,30 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/titles.dart';
+import '../models/movie_model.dart';
 
 class ResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Result')),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Text('${Provider.of<Titles>(context, listen: false).query}の検索結果'),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemBuilder: (BuildContext context, int idx) {
-                return ListTile(
-                  title: Text(Provider.of<Titles>(context).getTitle(idx)),
-                  onTap: () => Navigator.of(context).pushNamed('/infoPage'),
-                );
-              },
-              itemCount: Provider.of<Titles>(context).listCount,
-            ),
-          ),
-        ],
+      appBar: AppBar(title: Text('${Provider.of<MovieModel>(context, listen: false).query}の検索結果')),
+      body: ListView.builder(
+        itemBuilder: (BuildContext context, int idx) {
+          return ListTile(
+              title: Text(Provider.of<MovieModel>(context).getTitle(idx)),
+              onTap: () {
+                Provider.of<MovieModel>(context, listen: false).saveMovieInfo(idx);
+                Navigator.of(context).pushNamed('/infoPage');
+              }
+          );
+        },
+        itemCount: Provider.of<MovieModel>(context).listCount,
       ),
     );
   }

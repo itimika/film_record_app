@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/titles.dart';
+import '../models/movie_model.dart';
 
 class SearchPage extends StatelessWidget {
   @override
@@ -12,13 +12,13 @@ class SearchPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.search),
                 labelText: 'search title.',
               ),
               onSubmitted: (val) {
                 if (val.length > 0) {
-                  Provider.of<Titles>(context, listen: false).searchMovies(val);
+                  Provider.of<MovieModel>(context, listen: false).searchMovies(val);
                   Navigator.of(context).pushNamed('/resultPage');
                 }
               },
